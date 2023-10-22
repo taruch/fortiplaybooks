@@ -1,0 +1,20 @@
+---
+- name: Allow specific IP address and port on fortios
+  hosts: "{{ target_fortigate }}"
+  vars:
+    fortigate_host: "{{ fg_host }}"
+    fortigate_username: "{{ fg_user }}"
+    fortigate_password: "{{ fg_password }}"
+    allow_ip: "{{ allow_ip_address }}"
+    allow_port: "{{ allow_port }}"
+  tasks:
+    - name: Allow IP and Port
+      fortios_firewall_policy:
+        host: "{{ fortigate_host }}"
+        username: "{{ fortigate_username }}"
+        password: "{{ fortigate_password }}"
+        state: "present"
+        firewall_policy:
+          srcaddr: "{{ allow_ip }}"
+          service: "{{ allow_port }}"
+          action: "accept"
