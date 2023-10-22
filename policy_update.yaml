@@ -1,0 +1,22 @@
+---
+- name: Update FortiGate Firewall Rules
+  hosts: "{{ target_fortigate }}"
+  gather_facts: False
+
+  tasks:
+    - name: Create or Update Policy
+      fortios_firewall_policy:
+        host: "{{ ansible_host }}"
+        username: "{{ ansible_user }}"
+        password: "{{ ansible_password }}"
+        state: "{{ policy_state }}"
+        firewall_policy:
+          policyid: "{{ policy_id }}"
+          name: "{{ policy_name }}"
+          srcintf: "{{ source_interface }}"
+          dstintf: "{{ destination_interface }}"
+          srcaddr: "{{ source_address }}"
+          dstaddr: "{{ destination_address }}"
+          action: "{{ policy_action }}"
+          service: "{{ policy_service }}"
+          comments: "{{ policy_comments }}"
