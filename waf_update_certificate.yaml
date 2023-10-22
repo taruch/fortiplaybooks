@@ -1,0 +1,48 @@
+---
+- name: Update SSL Certificate on FortiWeb WAF
+  hosts: "{{ target_hosts }}"
+  gather_facts: no
+
+  vars_prompt:
+    - name: certificate_name
+      prompt: "Enter the certificate name"
+      private: no
+    - name: certificate_data
+      prompt: "Enter the certificate data in PEM format"
+      private: yes
+    - name: virtual_server_name
+      prompt: "Enter the virtual server name"
+      private: no
+
+  tasks:
+    - name: Upload SSL Certificate
+      command: |
+        config system global
+        config certificate local
+        edit {{ certificate_name }}
+        set certificate-data |
+          {{ certificate_data }}
+        next
+        end
+      become: yes
+      become_method: enable
+
+    - name: Set Certificate in WAF Web Profile
+      command: |
+        config system vip
+        edit {{ virtual_server_name }}
+        set certificate {{ certificate_name }}
+        next
+        end
+      become: yes
+      become_method: enable
+
+    - name: Save Configuration
+      command: execute backup disk
+      become: yes
+      become_method: enable
+
+    - name: Commit Configuration
+      command: execute restore disk
+      become: yes
+      become_method: enable
