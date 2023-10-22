@@ -1,0 +1,18 @@
+---
+- name: Enable logging for specific policy on fortios
+  hosts: "{{ target_fortigate }}"
+  vars:
+    fortigate_host: "{{ fg_host }}"
+    fortigate_username: "{{ fg_user }}"
+    fortigate_password: "{{ fg_password }}"
+    log_policy_id: "{{ log_policy_id }}"
+  tasks:
+    - name: Enable local fw logging per policy ID
+      fortios_firewall_policy:
+        host: "{{ fortigate_host }}"
+        username: "{{ fortigate_username }}"
+        password: "{{ fortigate_password }}"
+        state: "present"
+        firewall_policy:
+          policyid: "{{ log_policy_id }}"
+          logtraffic: "all"
