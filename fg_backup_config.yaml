@@ -1,0 +1,18 @@
+---
+- name: Backup FortiGate configuration based on timestamp and store it on the ansible node for later movement
+  hosts: "{{ target_fortigate }}"
+  vars:
+    fortigate_host: "{{ fg_host }}"
+    fortigate_username: "{{ fg_user }}"
+    fortigate_password: "{{ fg_password }}"
+  tasks:
+    - name: Get current date and time
+      set_fact:
+        timestamp: "{{ lookup('pipe', 'date +%Y%m%d%H%M%S') }}"
+        
+    - name: Backup Configuration
+      fortios_system_config_backup:
+        host: "{{ fortigate_host }}"
+        username: "{{ fortigate_username }}"
+        password: "{{ fortigate_password }}"
+        backup_path: "/etc/forti/backup_{{ timestamp }}.conf"
