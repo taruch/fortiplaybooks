@@ -1,0 +1,14 @@
+---
+- name: Add New User to FortiOS
+  hosts: fortigate
+  tasks:
+    - name: Create user
+      fortios_system_admin:
+        host: "{{ fortigate_host }}"
+        username: "{{ fortigate_user }}"
+        password: "{{ fortigate_password }}"
+        state: present
+        system_admin:
+          name: "{{ new_username }}"
+          password: "{{ new_password }}"
+          accprofile: "{{ accprofile }}"
