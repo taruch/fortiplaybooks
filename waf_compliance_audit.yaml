@@ -1,0 +1,39 @@
+---
+- name: WAF Compliance Audit
+  hosts: waf
+  gather_facts: no
+
+  vars_prompt:
+    - name: fortinet_host
+      prompt: "Enter the FortiWeb hostname or IP address"
+      private: no
+    - name: fortinet_username
+      prompt: "Enter your FortiWeb API username"
+      private: no
+    - name: fortinet_password
+      prompt: "Enter your FortiWeb API password"
+      private: yes
+    - name: policy_template
+      prompt: "Enter the name of the policy template to audit"
+      private: no
+    - name: target_hosts
+      prompt: "Enter the target host(s) or inventory group to audit (e.g., 'waf' or 'waf_servers')"
+      private: no
+    - name: validate_certs
+      prompt: "Validate SSL certificates? (yes/no)"
+      private: no
+
+  tasks:
+    - name: Run WAF Compliance Audit
+      uri:
+        url: "https://{{ fortinet_host }}/api/v1/scan/compliance"
+        method: POST
+        headers:
+          Content-Type: "application/json"
+        body_format: json
+        body: '{"policy_name": "{{ policy_template }}"}'
+        validate_certs: "{{ validate_certs | bool }}"
+        user: "{{ fortinet_username }}"
+        password: "{{ fortinet_password }}"
+        status_code: 200
+      delegate_to: localhost
