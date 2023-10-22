@@ -1,0 +1,18 @@
+---
+- name: Backup FortiWeb Configuration
+  hosts: "{{ target_fortiweb }}"
+  vars:
+    fortiweb_host: "{{ fw_host }}"
+    fortiweb_username: "{{ fw_user }}"
+    fortiweb_password: "{{ fw_password }}"
+  tasks:
+    - name: Get current date and time
+      set_fact:
+        timestamp: "{{ lookup('pipe', 'date +%Y%m%d%H%M%S') }}"
+        
+    - name: Backup Configuration
+      fortios_system_config_backup:
+        host: "{{ fortiweb_host }}"
+        username: "{{ fortiweb_username }}"
+        password: "{{ fortiweb_password }}"
+        backup_path: "/etc/forti/waf/backup_{{ timestamp }}.conf"
