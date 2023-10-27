@@ -1,0 +1,8 @@
+---
+collections:
+  - name: fortinet.fortios
+  - name: ansible.netcommon
+  - name: ansible.utils
+
+
+...
