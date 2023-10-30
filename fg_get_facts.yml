@@ -1,0 +1,27 @@
+---
+- name: Get facts from Fortinet Fortigate devices
+  gather_facts: false
+  hosts: fortigates
+  collections:
+    - fortinet.fortios
+  vars:
+    vdom: "root"
+
+  tasks:
+  - name: Get license shizzle
+    fortios_monitor_fact:
+      vdom: "root"
+      selectors:
+        #- selector: license_status
+        - selector: system_status
+        - selector: firewall_policy
+        #- selector: firewall_security-policy
+        #  params:
+        #    policyid: '1'
+    register: fortifacts
+
+  - name: debug ansible facts
+    ansible.builtin.debug:
+      msg: "{{ fortifacts }}"
+      #msg: "{{ ansible_facts }}"
+
