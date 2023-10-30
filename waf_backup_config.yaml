@@ -15,4 +15,4 @@
         host: "{{ fortiweb_host }}"
         username: "{{ fortiweb_username }}"
         password: "{{ fortiweb_password }}"
-        backup_path: "/etc/forti/waf/backup_{{ timestamp }}.conf"
+        backup_path: "./waf/backup_{{ timestamp }}.conf"
