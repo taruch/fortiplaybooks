@@ -1,0 +1,35 @@
+---
+- name: Create API User
+  hosts: fortigates
+  gather_facts: false
+  collections:
+    - fortinet.fortios
+
+  tasks:
+
+  - name: Create An API User if not present
+    fortios_system_api_user:
+      vdom: 'root'
+      state: 'present'
+      system_api_user:
+        name: 'AnsibleAPIUser'
+        accprofile: 'super_admin' # This is predefined privilege profile.
+        vdom:
+          - name: 'root'
+        trusthost:
+          - id: '1'
+            ipv4_trusthost: '71.121.212.223 255.255.255.255'
+  
+  - name: Generate The API token
+    fortios_monitor:
+      vdom: 'root'
+      selector: 'generate-key.system.api-user'
+      params:
+        api-user: 'AnsibleAPIUser'
+    register: tokeninfo
+  
+  - name: do another api request with newly generated access_token
+    fortios_configuration_fact:
+      access_token: "{{ tokeninfo.meta.results.access_token }}"
+      vdom: 'root'
+      selector: 'system_status'
