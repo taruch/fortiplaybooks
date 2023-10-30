@@ -1,27 +1,44 @@
 ---
-- name: Get facts from Fortinet Fortigate devices
+- name: Get Fortinet Fortigate firewall_policy facts
   gather_facts: false
   hosts: fortigates
   collections:
     - fortinet.fortios
-  vars:
-    vdom: "root"
 
   tasks:
-  - name: Get license shizzle
-    fortios_monitor_fact:
+
+  - name: use fortios_configuration_fact module to get firewall_policy facts
+    fortios_configuration_fact:
       vdom: "root"
+      #access_token: "{{ token }}"
       selectors:
-        #- selector: license_status
-        - selector: system_status
-        - selector: firewall_policy
-        #- selector: firewall_security-policy
-        #  params:
-        #    policyid: '1'
-    register: fortifacts
-
-  - name: debug ansible facts
+      - selector: firewall_policy
+    register: forti_firewallpolicy
+  
+  - name: debug forti_firewallpolicy
     ansible.builtin.debug:
-      msg: "{{ fortifacts }}"
-      #msg: "{{ ansible_facts }}"
+      msg: "{{ forti_firewallpolicy.meta[0].results | to_nice_yaml }}"
+    tags:
+      - never
+      - verbose
 
+  - name: set fact
+    ansible.builtin.set_fact:
+      firewall_policy: "{{ forti_firewallpolicy.meta[0].results | to_nice_yaml }}"
+    tags:
+      - never
+      - verbose
+
+  - name: debug firewall_policy
+    ansible.builtin.debug:
+      var: firewall_policy
+    tags:
+      - never
+      - verbose
+
+  - name: Write out the policy to host_vars
+    ansible.builtin.copy:
+      content: "firewall_policy:\n{{ forti_firewallpolicy.meta[0].results | to_nice_yaml  }}"
+        #content: "{{ firewall_policy | to_nice_json }}"
+      dest: "./host_vars/{{ inventory_hostname }}.yml" 
+    delegate_to: localhost
