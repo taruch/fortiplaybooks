@@ -1,0 +1,39 @@
+---
+- name: Allow specific IP address and port on fortios
+  hosts: fortigates
+  gather_facts: false
+  collections:
+    - fortinet.fortios
+  vars:
+    vdom: "root"
+
+  tasks:
+  - name: Create addresses
+    block:
+    - name: Create Address
+      fortios_firewall_address:
+        state: present
+        firewall_address:
+          name: webservers
+          associated_interface: port2
+          subnet: 10.0.2.0 255.255.255.0
+
+    - name: Create Address
+      fortios_firewall_address:
+        state: present
+        firewall_address:
+          name: external
+          associated_interface: port3
+          subnet: 10.0.3.0 255.255.255.0
+    tags:
+      - never
+      - address
+    #### END OF BLOCK
+
+
+  - name: Create Firewall Policy
+    fortios_firewall_policy:
+      vdom: "root"
+      state: "present"
+      firewall_policy: "{{ item }}"
+    loop: "{{ firewall_policy }}"

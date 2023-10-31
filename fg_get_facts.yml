@@ -18,27 +18,24 @@
   - name: debug forti_firewallpolicy
     ansible.builtin.debug:
       msg: "{{ forti_firewallpolicy.meta[0].results | to_nice_yaml }}"
-    tags:
-      - never
-      - verbose
+      verbosity: 2
+    delegate_to: localhost
 
   - name: set fact
     ansible.builtin.set_fact:
-      firewall_policy: "{{ forti_firewallpolicy.meta[0].results | to_nice_yaml }}"
-    tags:
-      - never
-      - verbose
+      firewall_policy: "{{ forti_firewallpolicy.meta[0].results }}"
+      #firewall_policy: "{{ forti_firewallpolicy.meta[0].results | to_nice_yaml }}"
+      verbosity: 2
+    delegate_to: localhost
 
   - name: debug firewall_policy
     ansible.builtin.debug:
       var: firewall_policy
-    tags:
-      - never
-      - verbose
+      verbosity: 2
+    delegate_to: localhost
 
   - name: Write out the policy to host_vars
-    ansible.builtin.copy:
-      content: "firewall_policy:\n{{ forti_firewallpolicy.meta[0].results | to_nice_yaml  }}"
-        #content: "{{ firewall_policy | to_nice_json }}"
+    ansible.builtin.template:
+      src: ./firewall_policy.j2
       dest: "./host_vars/{{ inventory_hostname }}.yml" 
     delegate_to: localhost
