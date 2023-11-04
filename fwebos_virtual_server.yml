@@ -1,0 +1,27 @@
+---
+- name: Configure virtual server vip
+  hosts: fortiweb
+  gather_facts: false
+  collections:
+    - fortinet.fortiweb
+  vars:
+
+  tasks:
+  - name: Create virtual server
+    fwebos_virtual_server:
+      action: add
+      name: entrenchedrealist
+      vdom: root
+    ignore_errors: true
+    register: create_vs_result
+
+  - name: debug
+    debug:
+      msg: "{{ create_vs_result }}"
+
+  - name: fail the play if the previous command did not succeed
+    ansible.builtin.fail:
+      msg: "{{ create_vs_result.res.results.message }}"
+    when:
+      - create_vs_result.failed == true
+      - create_vs_result.res.results.message != 'A duplicate entry has already existed.'
