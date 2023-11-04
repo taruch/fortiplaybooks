@@ -1,0 +1,29 @@
+---
+- name:
+  hosts: fortiweb
+  vars:
+  gather_facts: false
+  collections:
+    - fortinet.fortiweb
+  tasks:
+    - name: Upload ca 
+      fwebos_certificate_ca:
+        action: add 
+        vdom: root
+        type: localPC 
+        srcfile: "{{ item }}" 
+      loop: "{{ CA_Certificates }}"
+
+#    - name: Delete ca 
+#      fwebos_certificate_ca:
+#       action: delete 
+#       vdom: root1
+#       name: CA_Cert_2
+#
+#    - name: Create ca 
+#      fwebos_certificate_ca:
+#       action: add 
+#       vdom: root1
+#       type: scep
+#       returl: https://www.aaa.com
+#       identifier: test 

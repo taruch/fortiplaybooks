@@ -19,4 +19,7 @@ fwebos_virtual_server_vip:
   - table_name: entrenchedrealist2
     vip: entrencherealist2_vip
 
+CA_Certificates:
+  - ./files/2022-IT-Root-CA.pem
+  - ./files/cacert.pem
 
