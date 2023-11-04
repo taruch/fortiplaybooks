@@ -1,0 +1,48 @@
+---
+- name: Configure virtual server vip
+  hosts: fortiweb
+  gather_facts: false
+  collections:
+    - fortinet.fortiweb
+  vars:
+    #ansible_network_os: fortinet.fortiweb.fwebos
+    #ansible_httpapi_use_ssl: yes
+    #ansible_httpapi_validate_certs: no
+    #ansible_httpapi_port: 8443
+
+  tasks:
+
+  - name: Create Virtual Server VIP
+    fwebos_virtual_server_vip:
+      action: add
+      table_name: "{{ item.table_name }}"
+      vip: "{{ item.vip }}"
+      status: enable
+      vdom: root
+    loop: "{{ fwebos_virtual_server_vip }}"
+    ignore_errors: true
+    register: virtual_server_vip_result
+
+  - name: Debug Create Virtual Server VIP result 
+    ansible.builtin.debug:
+      msg: "{{ virtual_server_vip_result }}"
+      verbosity: 3
+
+  - name: fail the play if the previous command did not succeed
+    ansible.builtin.fail:
+      msg: "{{ virtual_server_vip_result.res.results.message }}"
+    when:
+      - item.failed == true
+      - item.res.results.message != 'A duplicate entry has already existed.'
+    loop: "{{ virtual_server_vip_result.results }}"
+
+
+#   - name: edit
+#     fwebos_virtual_server_vip:
+#       action: edit
+#       table_name: entrenchedrealist
+#       vip: entrenchedrealist_vip
+#       status: enable
+#       name: 1
+#       vdom: root
+

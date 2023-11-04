@@ -6,10 +6,17 @@ fwebos_virtual_servers:
     vdom: root
 
 fwebos_virtual_ip:
-   -   name: entrencherealist1_vip
-       vip: 5.5.5.5
-       interface: port1
-   -   name: entrencherealist2_vip
-       vip: 6.6.6.6
-       interface: port1
+  - name: entrencherealist1_vip
+    vip: 5.5.5.5
+    interface: port1
+  - name: entrencherealist2_vip
+    vip: 6.6.6.6
+    interface: port1
+
+fwebos_virtual_server_vip:
+  - table_name: entrenchedrealist1
+    vip: entrencherealist1_vip
+  - table_name: entrenchedrealist2
+    vip: entrencherealist2_vip
+
 

@@ -48,5 +48,7 @@ Make sure that the ansible_connection: httpapi is specified in the group_vars or
 Had my first successful run of any fortiweb module, to create a virtual server:
 ansible-navigator run -mstdout fwebos_virtual_server.yml 
 
-
-fwebos_virtual_server.yml is working now
+Working playbooks:
+- fwebos_virtual_server.yml
+- fwebos_virtual_ip.yml
+- fwebos_virtual_server_vip.yml
