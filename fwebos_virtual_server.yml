@@ -7,21 +7,25 @@
   vars:
 
   tasks:
-  - name: Create virtual server
+  - name: Create a Virtual Server
     fwebos_virtual_server:
       action: add
-      name: entrenchedrealist
+      name: "{{ item.name }}"
       vdom: root
     ignore_errors: true
+    loop: "{{ fwebos_virtual_servers }}"
     register: create_vs_result
+    
 
-  - name: debug
-    debug:
+  - name: Debug output of Create a Virtual Server
+    ansible.builtin.debug:
       msg: "{{ create_vs_result }}"
+      verbosity: 3
 
   - name: fail the play if the previous command did not succeed
     ansible.builtin.fail:
       msg: "{{ create_vs_result.res.results.message }}"
     when:
-      - create_vs_result.failed == true
-      - create_vs_result.res.results.message != 'A duplicate entry has already existed.'
+      - item.failed == true
+      - item.res.results.message != 'A duplicate entry has already existed.'
+    loop: "{{ create_vs_result.results }}"
