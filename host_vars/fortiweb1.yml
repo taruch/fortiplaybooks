@@ -1,0 +1,7 @@
+---
+fwebos_virtual_servers:
+  - name: entrenchedrealist1
+    vdom: root
+  - name: entrenchedrealist2
+    vdom: root
+
