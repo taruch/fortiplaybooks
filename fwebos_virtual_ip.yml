@@ -1,0 +1,23 @@
+---
+- name: Create Virtual IP
+  hosts: fortiweb
+  gather_facts: false
+  collections:
+    - fortinet.fortiweb
+  vars:
+    #ansible_network_os: fortinet.fortiweb.fwebos
+    #ansible_httpapi_use_ssl: yes
+    #ansible_httpapi_validate_certs: no
+    #ansible_httpapi_port: 8443
+
+  tasks:
+    - name: Create
+      fwebos_virtual_ip:
+        action: add
+        name: "{{ item.name }}"
+        vip: "{{ item.vip }}"
+        interface: "{{ item.interface }}"
+        vdom: root
+      loop: "{{ fwebos_virtual_ip }}"
+
+...
