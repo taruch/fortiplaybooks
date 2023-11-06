@@ -1,0 +1,76 @@
+all:
+  children:
+    fortigates:
+      hosts:
+        fortigate1:
+          ansible_connection: httpapi
+          ansible_host: ec2-23-23-181-188.compute-1.amazonaws.com
+          ansible_httpapi_port: 443
+          ansible_httpapi_use_ssl: true
+          ansible_httpapi_validate_certs: false
+          ansible_network_os: fortinet.fortios.fortios
+          firewall_policy:
+          - action: accept
+            dstaddr:
+            - name: webservers
+            dstintf:
+            - name: port2
+            name: webpolicy
+            policyid: 1
+            schedule: always
+            service:
+            - name: HTTP
+            - name: HTTPS
+            srcaddr:
+            - name: external
+            srcintf:
+            - name: port3
+          - action: accept
+            dstaddr:
+            - name: webservers
+            dstintf:
+            - name: port2
+            name: remote_access
+            policyid: 2
+            schedule: always
+            service:
+            - name: SSH
+            srcaddr:
+            - name: external
+            srcintf:
+            - name: port3
+          host: ec2-23-23-181-188.compute-1.amazonaws.com
+          password: Ansible!23
+          token: pfmbp3bfmfjbNrQxc6dxmw7n1k0ngm
+          user: admin
+    fortiweb:
+      hosts:
+        fortiweb1:
+          CA_Certificates:
+          - ./files/2022-IT-Root-CA.pem
+          - ./files/cacert.pem
+          ansible_connection: ansible.netcommon.httpapi
+          ansible_host: ec2-3-84-9-65.compute-1.amazonaws.com
+          ansible_httpapi_port: 8443
+          ansible_httpapi_use_ssl: true
+          ansible_httpapi_validate_certs: false
+          ansible_network_os: fortinet.fortiweb.fwebos
+          certificate_file: ./files/aaphub.local.pem.crt
+          fwebos_virtual_ip:
+          - interface: port1
+            name: entrencherealist1_vip
+            vip: 5.5.5.5
+          - interface: port1
+            name: entrencherealist2_vip
+            vip: 6.6.6.6
+          fwebos_virtual_server_vip:
+          - table_name: entrenchedrealist1
+            vip: entrencherealist1_vip
+          - table_name: entrenchedrealist2
+            vip: entrencherealist2_vip
+          fwebos_virtual_servers:
+          - name: entrenchedrealist1
+            vdom: root
+          - name: entrenchedrealist2
+            vdom: root
+          key_file: ./files/aaphub.local.key.pem

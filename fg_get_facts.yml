@@ -8,7 +8,7 @@
   tasks:
 
   - name: use fortios_configuration_fact module to get firewall_policy facts
-    fortios_configuration_fact:
+    fortinet.fortios.fortios_configuration_fact:
       vdom: "root"
       #access_token: "{{ token }}"
       selectors:
