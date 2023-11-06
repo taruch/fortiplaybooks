@@ -40,9 +40,6 @@ all:
             srcintf:
             - name: port3
           host: ec2-23-23-181-188.compute-1.amazonaws.com
-          password: Ansible!23
-          token: pfmbp3bfmfjbNrQxc6dxmw7n1k0ngm
-          user: admin
     fortiweb:
       hosts:
         fortiweb1:
