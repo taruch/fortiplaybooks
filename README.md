@@ -53,13 +53,14 @@ Working playbooks:
 - fwebos_virtual_ip.yml
 - fwebos_virtual_server_vip.yml
 
-mostly working playbooks:
+Mostly working playbooks:
 - fwebos_certificate_ca.yml
 Will continue to add the same ca cert - not idempotent.
 
 - fwebos_certificate_local_csr.yml 
 You can create the csr, but no way to download it automatically. Once you have downloaded 
 it manually, you need to create the certificate manually, and store it somewhere.
+-- Run the playbook, then look in the gui in Server Objects -> Certificates -> Local
 - fwebos_certificate_local_import_certificate.yml
 You can't upload a certificate where the CSR was not generated on the Fortiweb.
 Supposedly you can upload the certificate and the key, but this hasn't worked yet for me.
