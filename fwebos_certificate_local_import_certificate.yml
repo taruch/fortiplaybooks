@@ -10,10 +10,11 @@
 
     - name: Upload certificate 
       fwebos_certificate_local_import_certificate:
-       action: add
-       vdom: root
-       type: localCertificate
-       certificateFile: ./files/host1.entrenchedrealist.com.pem.crt
+        action: add
+        vdom: root
+        type: localCertificate
+        certificateFile: ./files/host1.entrenchedrealist.com.pem.crt
+      loop: "{{ local_certificates }}"
 
 #    - name: Upload certificate 
 #      fwebos_certificate_local_import_certificate:

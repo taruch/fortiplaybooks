@@ -23,6 +23,7 @@ CA_Certificates:
   - ./files/2022-IT-Root-CA.pem
   - ./files/cacert.pem
 
-certificate_file: ./files/aaphub.local.pem.crt
-key_file: ./files/aaphub.local.key.pem
+local_certificates:
+  - certificate_file: ./files/host1.entrenchedrealist.com.pem.crt
+    key_file: ./files/.key.pem
 
