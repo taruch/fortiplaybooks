@@ -1,0 +1,68 @@
+---
+- name: Upload New Certificate to FortiWeb
+  hosts: fortiweb
+  gather_facts: false
+  collections:
+    - fortinet.fortiweb
+  vars:
+    ansible_network_os: fortinet.fortiweb.fwebos
+    ansible_connection: ansible.netcommon.httpapi
+    ansible_httpapi_use_ssl: yes
+    ansible_httpapi_validate_certs: no
+    ansible_httpapi_port: 8443
+
+  tasks:
+
+    - name: Set certificate variable from file
+      ansible.builtin.set_fact:
+        server_certificate: "{{ lookup('ansible.builtin.file', certificate_file) }}"
+        server_key: "{{ lookup('ansible.builtin.file', key_file) }}"
+
+    - name: Upload certificate 
+      fwebos_certificate_local_import_certificate:
+       action: add
+       vdom: root
+       type: localCertificate
+       certificateFile: ./files/host2.entrenchedrealist.com.pem.crt
+       #keyFile: ./files/aaphub.local.key.pem
+       #certificateFile: "{{ server_certificate }}"
+       #keyFile: "{{ server_key }}"
+       #hsm: undefined
+       #password: 12345678
+
+#    - name: Upload pkcs12 certificate 
+#      fwebos_certificate_local_import_certificate:
+#       action: add
+#       vdom: root
+#       type: PKCS12Certificate
+#       certificateWithKeyFile: ca.p12
+#       password: 12345678
+#
+#    - name:  Delete certificate 
+#      fwebos_certificate_local_import_certificate:
+#       action: delete
+#       vdom: root
+#       name: ca 
+#
+#    - name: Upload certificate 
+#      fwebos_certificate_local_import_certificate:
+#       action: add
+#       vdom: root
+#       type: certificate
+#       certificateFile: ca.crt
+#       keyFile: ca.key
+#       hsm: undefined
+#       password: 12345678
+#
+#    - name:  Delete certificate 
+#      fwebos_certificate_local_import_certificate:
+#       action: delete
+#       vdom: root
+#       name: ca 
+#
+#    - name: Upload local certificate 
+#      fwebos_certificate_local_import_certificate:
+#       action: add
+#       vdom: root
+#       type: localCertificate 
+#       certificateFile: cert.cer

@@ -23,3 +23,6 @@ CA_Certificates:
   - ./files/2022-IT-Root-CA.pem
   - ./files/cacert.pem
 
+certificate_file: ./files/aaphub.local.pem.crt
+key_file: ./files/aaphub.local.key.pem
+
