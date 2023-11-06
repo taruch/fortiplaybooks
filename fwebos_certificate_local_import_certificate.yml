@@ -13,23 +13,32 @@
 
   tasks:
 
-    - name: Set certificate variable from file
-      ansible.builtin.set_fact:
-        server_certificate: "{{ lookup('ansible.builtin.file', certificate_file) }}"
-        server_key: "{{ lookup('ansible.builtin.file', key_file) }}"
-
     - name: Upload certificate 
       fwebos_certificate_local_import_certificate:
        action: add
        vdom: root
        type: localCertificate
-       certificateFile: ./files/host2.entrenchedrealist.com.pem.crt
-       #keyFile: ./files/aaphub.local.key.pem
-       #certificateFile: "{{ server_certificate }}"
-       #keyFile: "{{ server_key }}"
-       #hsm: undefined
-       #password: 12345678
+       certificateFile: ./files/aaphub.local.pem.crt
+       keyFile: ./files/aaphub.local.key.pem
+       certificateWithKeyFile: ./files/aaphub.local.crt
 
+#    - name: Upload certificate 
+#      fwebos_certificate_local_import_certificate:
+#       action: add
+#       vdom: root
+#       type: localCertificate
+#       certificateFile: ./files/host2.entrenchedrealist.com.pem.crt
+#       #keyFile: ./files/aaphub.local.key.pem
+#       #certificateFile: "{{ server_certificate }}"
+#       #keyFile: "{{ server_key }}"
+#       #hsm: undefined
+#       #password: 12345678
+#
+#    - name: Set certificate variable from file
+#      ansible.builtin.set_fact:
+#        server_certificate: "{{ lookup('ansible.builtin.file', certificate_file) }}"
+#        server_key: "{{ lookup('ansible.builtin.file', key_file) }}"
+#
 #    - name: Upload pkcs12 certificate 
 #      fwebos_certificate_local_import_certificate:
 #       action: add
