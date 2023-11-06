@@ -13,7 +13,7 @@ firewall_policy:
     - name: webservers
   service: 
     - name: HTTP
-      #- name: HTTPS
+    - name: HTTPS
   schedule: always
 - name: remote_access
   policyid: 2
