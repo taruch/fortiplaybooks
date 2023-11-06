@@ -13,7 +13,7 @@
        action: add
        vdom: root
        type: PKCS12Certificate
-       certificateWithKeyFile: aaphub.p12
+       certificateWithKeyFile: ./files/aaphub.p12
        password: PASSW0RD
 
 #    - name: Upload certificate 
