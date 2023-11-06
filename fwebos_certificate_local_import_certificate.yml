@@ -8,15 +8,23 @@
 
   tasks:
 
-    - name: Upload certificate 
+    - name: Upload pkcs12 certificate 
       fwebos_certificate_local_import_certificate:
        action: add
        vdom: root
-       type: certificate
-       certificateFile: ca.crt
-       keyFile: ca.key
-       hsm: undefined
-       password: 12345678
+       type: PKCS12Certificate
+       certificateWithKeyFile: aaphub.p12
+       password: PASSW0RD
+
+#    - name: Upload certificate 
+#      fwebos_certificate_local_import_certificate:
+#        action: add
+#        vdom: root
+#        type: certificate
+#        certificateFile: ./files/aaphub.local.crt
+#        keyFile: ./files/aaphub.local.key
+#        #hsm: undefined
+#        #password: 12345678
          
 #    - name: Upload certificate 
 #      fwebos_certificate_local_import_certificate:
