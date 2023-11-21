@@ -5,16 +5,24 @@
   collections:
     - fortinet.fortiweb
   vars:
+    certificate: "/tmp/cert.p12"
 
   tasks:
+  - name: Download file and force basic auth
+    ansible.builtin.get_url:
+      url: "{{ host }}/api/now/attachment/{{ sys_id }}/file"
+      dest: "{{ certificate }}"
+      force_basic_auth: yes
+      username: "{{ username }}"
+      password: "{{ password }}"
 
-    - name: Upload pkcs12 certificate 
-      # this tasks expects that a previous template was run
-      # to get the certificate from ServiceNow, and that
-      # the p12 certificate was placed in /tmp/cert.p12
-      fwebos_certificate_local_import_certificate:
-       action: add
-       vdom: root
-       type: PKCS12Certificate
-       certificateWithKeyFile: /tmp/cert.p12
-       password: PASSW0RD
+  - name: Upload pkcs12 certificate 
+    # this tasks expects that a previous template was run
+    # to get the certificate from ServiceNow, and that
+    # the p12 certificate was placed in /tmp/cert.p12
+    fwebos_certificate_local_import_certificate:
+     action: add
+     vdom: root
+     type: PKCS12Certificate
+     certificateWithKeyFile: "{{ certificate }}"
+     password: PASSW0RD
