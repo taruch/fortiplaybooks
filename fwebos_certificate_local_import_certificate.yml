@@ -15,6 +15,7 @@
       force_basic_auth: yes
       username: "{{ username }}"
       password: "{{ password }}"
+    delegate_to: localhost
 
   - name: Upload pkcs12 certificate 
     # this tasks expects that a previous template was run
