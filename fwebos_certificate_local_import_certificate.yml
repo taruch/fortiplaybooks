@@ -9,9 +9,12 @@
   tasks:
 
     - name: Upload pkcs12 certificate 
+      # this tasks expects that a previous template was run
+      # to get the certificate from ServiceNow, and that
+      # the p12 certificate was placed in /tmp/cert.p12
       fwebos_certificate_local_import_certificate:
        action: add
        vdom: root
        type: PKCS12Certificate
-       certificateWithKeyFile: ./files/aaphub.p12
+       certificateWithKeyFile: /tmp/cert.p12
        password: PASSW0RD
