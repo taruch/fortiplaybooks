@@ -6,6 +6,7 @@
     - fortinet.fortiweb
   vars:
     certificate: "/tmp/cert.p12"
+    #sys_id: 'ce17dc5f47ae3590d2bbe228436d43c4'
 
   tasks:
   - name: Download file and force basic auth
