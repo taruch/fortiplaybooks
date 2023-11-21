@@ -1,0 +1,184 @@
+---
+- name: Fortinet Templates setup
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  collections:
+    - ansible.controller
+  organization: "Network Automation"
+  inventory: "Fortinet Demo"
+  project: "Fortinet"
+  credential: "Fortinet"
+  environment:
+    #CONTROLLER_HOST: "{{ controller }}"
+    #CONTROLLER_USERNAME: "{{ username }}"
+    #CONTROLLER_PASSWORD: "{{ password }}"
+    CONTROLLER_VERIFY_SSL: False
+  
+  tasks:
+  - name: Create FortiWeb Credential
+    ansible.controller.credential:
+      name: "{{ credential }}"
+      credential_type: Machine
+      inputs:
+        username: admin
+        password: CHANGEME
+
+  - name: Create FortiWeb Inventory
+    ansible.controller.inventory:
+      name: "{{ inventory }}"
+      description: "Fortinet Inventory"
+      organization: "{{ organization }}"
+      state: present
+
+  - name: Create Fortinet project
+    ansible.controller.project:
+      name: "{{ project }}"
+      organization: "{{ organization }}"
+      scm_type: git
+      scm_url: "https://github.com/michaelquickct/fortiplaybooks"
+      state: present
+
+  - name: FortiWeb Create VIP job template
+    ansible.controller.job_template:
+      name: "FORTINET / FortiWeb Create VIP"
+      job_type: "run"
+      organization: "{{ organization }}"
+      inventory: "{{ inventory }}"
+      project: "{{ project }}"
+      playbook: "fwebos_virtual_ip.yml"
+      credentials:
+        - "{{ credential }}"
+      ask_variables_on_launch: true
+      state: "present"
+
+  - name: FortiWeb Create Virtual Server job template
+    ansible.controller.job_template:
+      name: "FORTINET / FortiWeb Create Virtual Server"
+      job_type: "run"
+      organization: "{{ organization }}"
+      inventory: "{{ inventory }}"
+      project: "{{ project }}"
+      playbook: "fwebos_virtual_server.yml"
+      credentials:
+        - "{{ credential }}"
+      ask_variables_on_launch: true
+      state: "present"
+
+  - name: FortiWeb Create Virtual Server VIP job template
+    ansible.controller.job_template:
+      name: "FORTINET / FortiWeb Create Virtual Server VIP"
+      job_type: "run"
+      organization: "{{ organization }}"
+      inventory: "{{ inventory }}"
+      project: "{{ project }}"
+      playbook: "fwebos_virtual_server_vip.yml"
+      credentials:
+        - "{{ credential }}"
+      ask_variables_on_launch: true
+      state: "present"
+
+  - name: FortiWeb Upload CA Certificate job template
+    ansible.controller.job_template:
+      name: "FORTINET / FortiWeb Upload CA Certificate"
+      job_type: "run"
+      organization: "{{ organization }}"
+      inventory: "{{ inventory }}"
+      project: "{{ project }}"
+      playbook: "fwebos_certificate_ca.yml"
+      credentials:
+        - "{{ credential }}"
+      ask_variables_on_launch: true
+      state: "present"
+
+  - name: FortiWeb Upload Local Certificate job template
+    ansible.controller.job_template:
+      name: "FORTINET / FortiWeb Upload Local Certificate"
+      job_type: "run"
+      organization: "{{ organization }}"
+      inventory: "{{ inventory }}"
+      project: "{{ project }}"
+      playbook: "fwebos_certificate_local_import_certificate.yml"
+      credentials:
+        - "{{ credential }}"
+      ask_variables_on_launch: true
+      state: "present"
+
+#  - name: Create Fortinet New Virtual Server Workflow 
+#    ansible.controller.workflow_job_template:
+#      name: "FORTINET / FortiWeb Create Virtual Server Workflow"
+#      inventory: "{{ inventory }}"
+#      #workflow_nodes:s
+#      schema:
+#      - identifier: Inventory Source Sync 
+#        unified_job_template:
+#          name: "FORTINET / FortiWeb Create VIP"
+#          inventory:
+#          type: inventory_source
+#        related:
+#          success_nodes: 
+#          - identifier: "FORTINET / FortiWeb Create Virtual Server" 
+#          failure_nodes: []
+#          always_nodes: []
+#          credentials: []
+#
+#      - identifier: "FORTINET / FortiWeb Create Virtual Server"
+#        unified_job_template:
+#          name: "FORTINET / FortiWeb Create Virtual Server"
+#          type: job_template
+#        related:
+#          success_nodes: 
+#          - identifier: "SERVER / RHEL7 - Patch"
+#          failure_nodes: []
+#          always_nodes: []
+#          credentials: []
+#
+#
+#      - identifier: SATELLITE / RHEL - Publish Content View
+#        unified_job_template:
+#          name: SATELLITE / RHEL - Publish Content View
+#          type: job_template
+#          extra_vars:
+#            content_view: RHEL7
+#        credentials: []
+#        related:
+#          success_nodes:
+#            - identifier: SATELLITE / RHEL - Promote Content View Job Template
+#          failure_nodes: []
+#          always_nodes: []
+#          credentials: []
+#
+#      - identifier: SATELLITE / RHEL - Promote Content View Job Template
+#        unified_job_template:
+#          name: SATELLITE / RHEL - Promote Content View
+#          type: job_template
+#          extra_vars: 
+#            content_view: RHEL7
+#            current_lifecycle_environment: RHEL7_Dev
+#            lifecycle_environment: RHEL7_QA
+#        credentials: []
+#        related:
+#          success_nodes:
+#            - identifier: SERVER / RHEL7 - Patch
+#          failure_nodes: []
+#          always_nodes: []
+#          credentials: []
+#
+#
+#      - identifier: SERVER / RHEL7 - Patch
+#        unified_job_template:
+#          name: SERVER / RHEL7 - Patch
+#          type: job_template
+#          extra_vars:
+#            lifecycle_stage: RHEL7_Dev
+#            check_only: 'no'
+#        credentials: []
+#        related:
+#          success_nodes:
+#            - identifier: 
+#          failure_nodes: []
+#          always_nodes: []
+#          credentials: []
+#
+#    register: job
+#
