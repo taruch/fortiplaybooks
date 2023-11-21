@@ -1,0 +1,14 @@
+---
+- name: Get an attachment from ServiceNow
+  hosts: localhost
+  gather_facts: false
+  vars:
+    sys_id: eb243703472e3590d2bbe228436d4366
+  tasks:
+  - name: Download file and force basic auth
+    ansible.builtin.get_url:
+      url: "{{ host }}/api/now/attachment/{{ sys_id }}/file"
+      dest: /tmp/cert.p12
+      force_basic_auth: yes
+      username: "{{ username }}"
+      password: "{{ password }}"
