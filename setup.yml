@@ -5,10 +5,11 @@
   gather_facts: no
   collections:
     - ansible.controller
-  organization: "Network Automation"
-  inventory: "Fortinet Demo"
-  project: "Fortinet"
-  credential: "Fortinet"
+  vars:
+    organization: "Network Automation"
+    inventory: "Fortinet Demo"
+    project: "Fortinet"
+    credential: "Fortinet"
   environment:
     #CONTROLLER_HOST: "{{ controller }}"
     #CONTROLLER_USERNAME: "{{ username }}"
