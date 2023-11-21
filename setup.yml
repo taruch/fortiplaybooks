@@ -10,6 +10,9 @@
     inventory: "Fortinet Demo"
     project: "Fortinet"
     credential: "Fortinet"
+    username: ''
+    password: ''
+    controller: ''
   environment:
     #CONTROLLER_HOST: "{{ controller }}"
     #CONTROLLER_USERNAME: "{{ username }}"
@@ -24,6 +27,8 @@
       inputs:
         username: admin
         password: CHANGEME
+      organization: "{{ organization }}"
+      state: present
 
   - name: Create FortiWeb Inventory
     ansible.controller.inventory:
