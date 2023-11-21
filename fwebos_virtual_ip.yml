@@ -5,19 +5,14 @@
   collections:
     - fortinet.fortiweb
   vars:
-    #ansible_network_os: fortinet.fortiweb.fwebos
-    #ansible_httpapi_use_ssl: yes
-    #ansible_httpapi_validate_certs: no
-    #ansible_httpapi_port: 8443
 
   tasks:
     - name: Create
       fwebos_virtual_ip:
         action: add
-        name: "{{ item.name }}"
-        vip: "{{ item.vip }}"
-        interface: "{{ item.interface }}"
+        name: "{{ vip_name }}"
+        vip: "{{ vip_ip }}"
+        interface: "port1"
         vdom: root
-      loop: "{{ fwebos_virtual_ip }}"
 
 ...
