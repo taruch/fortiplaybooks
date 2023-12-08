@@ -5,9 +5,9 @@
   become: false
   tasks:
 
-  # - name: Create Virtual IP variable
-  #   ansible.builtin.set_fact:
-  #     fwebos_virtual_server_name: "{{ fwebos_virtual_server | replace('.','_') }}"
+  - name: Create Virtual IP variable
+    ansible.builtin.set_fact:
+      fwebos_virtual_server_name: "{{ fwebos_virtual_server | replace('.','_') }}"
 
   # - name: Create Virtual Server Pool variable
   #   ansible.builtin.set_fact:
@@ -24,7 +24,7 @@
   - name: Set variables for workflow
     ansible.builtin.set_stats:
       data:
-      fwebos_virtual_server_name: "{{ fwebos_virtual_server_name }}"
-      fwebos_server_pool: "{{ fwebos_virtual_server_name }}_pool"
-      fwebos_server_policy: "{{ fwebos_virtual_server }}_policy"
-      fwebos_vip_name: "{{ fwebos_virtual_server_name }}_vip"        
+        fwebos_virtual_server_name: "{{ fwebos_virtual_server_name }}"
+        fwebos_server_pool: "{{ fwebos_virtual_server_name }}_pool"
+        fwebos_server_policy: "{{ fwebos_virtual_server }}_policy"
+        fwebos_vip_name: "{{ fwebos_virtual_server_name }}_vip"   
