@@ -1,0 +1,24 @@
+---
+- name: Configure Variables for Workflow
+  hosts: localhost
+  gather_facts: false
+  become: false
+  tasks:
+
+  - name: Create Virtual IP variable
+    ansible.builtin.set_fact:
+      fwebos_virtual_server_name: "{{ fwebos_virtual_server }}_name"
+
+  - name: Create Virtual Server Pool variable
+    ansible.builtin.set_fact:
+      fwebos_server_pool: "{{ fwebos_virtual_server }}_pool"
+
+  - name: Create Virtual IP variable
+    ansible.builtin.set_fact:
+      fwebos_server_policy: "{{ fwebos_virtual_server }}_policy"
+
+  - name: Set VIP Name variable
+    ansible.builtin.set_fact:
+      fwebos_vip_name: "{{ fwebos_virtual_server_name }}_vip"        
+
+fwebos_virtual_server | replace('.','_') }}_pool"

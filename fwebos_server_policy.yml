@@ -52,7 +52,7 @@
        prefer_current_session: disable
        retry_times_on_http_layer: 3
        case_sensitive: disable
-       name: test4
+       name: "{{ fwebos_server_policy  }}"
        replacemsg: Predefined
        server_pool: test4
        retry_on: disable

@@ -7,20 +7,12 @@
   vars:
 
   tasks:
-  - name: Set VIP Name variable
-    ansible.builtin.set_fact:
-      vip_name: "{{ fwebos_virtual_server_name }}_vip"
 
   - name: Create virtual IP
     fwebos_virtual_ip:
       action: add
-      name: "{{ vip_name }}"
+      name: "{{ fwebos_vip_name }}"
       vip: "{{ vip_ip }}"
       interface: "port1"
       vdom: root
-
-  - name: Set variables for workflow
-    ansible.builtin.set_stats:
-      data:
-        vip_name: "{{ vip_name }}"
 ...

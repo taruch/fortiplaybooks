@@ -17,7 +17,7 @@
       action: add
       table_name: "{{ fwebos_virtual_server_name }}"
       #table_name: "{{ item.table_name }}"
-      vip: "{{ vip_name }}"
+      vip: "{{ fwebos_vip_name }}"
       #vip: "{{ item.vip }}"
       status: enable
       vdom: root

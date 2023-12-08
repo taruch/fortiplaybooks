@@ -14,7 +14,7 @@
     fwebos_server_pool:
       action: add 
       vdom: root
-      name: "{{ fwebos_virtual_server | replace('.','_') }}_pool"
+      name: "{{ fwebos_server_pool }}"
       type: reverse-proxy
       server_balance: disable
       #server_balance: enable

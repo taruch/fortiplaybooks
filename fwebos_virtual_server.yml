@@ -8,10 +8,6 @@
 
   tasks:
 
-  - name: Configure Virtual Server Name variable
-    ansible.builtin.set_fact:
-      fwebos_virtual_server_name: "{{ fwebos_virtual_server | replace('.','_') }}"
-
   - name: Create a Virtual Server
     fwebos_virtual_server:
       action: add
