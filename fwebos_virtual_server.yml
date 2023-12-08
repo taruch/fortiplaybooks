@@ -17,7 +17,6 @@
     ignore_errors: true
     #loop: "{{ fwebos_virtual_servers }}"
     register: create_vs_result
-    
 
   - name: Debug output of Create a Virtual Server
     ansible.builtin.debug:
@@ -28,11 +27,5 @@
     ansible.builtin.fail:
       msg: "{{ create_vs_result.res.results.message }}"
     when:
-      - item.failed == true
-      - item.res.results.message != 'A duplicate entry has already existed.'
-    loop: "{{ create_vs_result.results }}"
-
-  - name: Set variables for workflow
-    ansible.builtin.set_stats:
-      data:
-        fwebos_virtual_server_name: "{{ fwebos_virtual_server_name }}"
+      - create_vs_result.failed == true
+      - create_vs_result.res.results.message != 'A duplicate entry has already existed.'

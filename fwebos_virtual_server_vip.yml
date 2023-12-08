@@ -34,9 +34,8 @@
     ansible.builtin.fail:
       msg: "{{ virtual_server_vip_result.res.results.message }}"
     when:
-      - item.failed == true
-      - item.res.results.message != 'A duplicate entry has already existed.'
-    loop: "{{ virtual_server_vip_result.results }}"
+      - virtual_server_vip_result.failed == true
+      - virtual_server_vip_result.res.results.message != 'A duplicate entry has already existed.'
 
 
 #   - name: edit
