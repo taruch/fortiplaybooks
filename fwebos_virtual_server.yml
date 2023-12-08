@@ -1,5 +1,5 @@
 ---
-- name: Configure virtual server vip
+- name: Configure virtual server name
   hosts: fortiweb
   gather_facts: false
   collections:
@@ -7,10 +7,15 @@
   vars:
 
   tasks:
+
+  - name: Configure Virtual Server Name variable
+    ansible.builtin.set_fact:
+      fwebos_virtual_server_name: "{{ fwebos_virtual_server | replace('.','_') }}"
+
   - name: Create a Virtual Server
     fwebos_virtual_server:
       action: add
-      name: "{{  fwebos_virtual_server }}"
+      name: "{{  fwebos_virtual_server_name }}"
       #name: "{{ item.name }}"
       vdom: root
     ignore_errors: true
@@ -30,3 +35,8 @@
       - item.failed == true
       - item.res.results.message != 'A duplicate entry has already existed.'
     loop: "{{ create_vs_result.results }}"
+
+  - name: Set variables for workflow
+    ansible.builtin.set_stats:
+      data:
+        fwebos_virtual_server_name: "{{ fwebos_virtual_server_name }}"
