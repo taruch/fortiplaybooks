@@ -15,11 +15,12 @@
   - name: Create Virtual Server VIP
     fwebos_virtual_server_vip:
       action: add
-      table_name: "{{ item.table_name }}"
+      table_name: "{{ fwebos_virtual_server_vip_table_name }}"
+      #table_name: "{{ item.table_name }}"
       vip: "{{ item.vip }}"
       status: enable
       vdom: root
-    loop: "{{ fwebos_virtual_server_vip }}"
+    #loop: "{{ fwebos_virtual_server_vip }}"
     ignore_errors: true
     register: virtual_server_vip_result
 
