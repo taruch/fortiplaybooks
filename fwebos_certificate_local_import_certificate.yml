@@ -9,10 +9,14 @@
 
   tasks:
 
+  - name: Set certificate fact
+    ansible.builtin.set_fact:
+      certificate: "/tmp/{{ fwebos_certificate }}.p12"
+
   - name: Download file and force basic auth
     ansible.builtin.get_url:
       url: "{{ SN_HOST }}/api/now/attachment/{{ sys_id }}/file"
-      dest: "{{ fwebos_certificate }}"
+      dest: "{{ certificate }}"
       force_basic_auth: yes
       username: "{{ SN_USERNAME }}"
       password: "{{ SN_PASSWORD }}"
@@ -26,6 +30,6 @@
       action: add
       vdom: root
       type: PKCS12Certificate
-      certificateWithKeyFile: "{{ fwebos_certificate }}"
+      certificateWithKeyFile: "{{ certificate }}"
       password: PASSW0RD
     no_log: true

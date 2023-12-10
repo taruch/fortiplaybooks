@@ -11,7 +11,7 @@
       action: edit
       vdom: root
       name: "{{ fwebos_server_policy  }}"
-      certificate: "aaphub"
+      certificate: "{{ fwebos_certificate }}"
 
     ignore_errors: true
     register: server_policy_result

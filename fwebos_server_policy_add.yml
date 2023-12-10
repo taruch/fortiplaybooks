@@ -61,7 +61,7 @@
       https_service: HTTPS
       http2: disable
       certificate_type: disable
-      certificate: "{{ fwebos_virtual_server_name }}"
+      certificate: "{{ fwebos_certificate }}"
       http2_custom_cipher: ECDHE-ECDSA-AES256-GCM-SHA384 DHE-DSS-AES128-GCM-SHA256 DHE-RSA-AES128-GCM-SHA256 ECDHE-RSA-AES256-GCM-SHA384
       web_protection_profile: Inline Standard Protection
       #certificate_group: test

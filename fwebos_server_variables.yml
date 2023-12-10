@@ -28,4 +28,4 @@
         fwebos_server_pool: "{{ fwebos_virtual_server_name }}_pool"
         fwebos_server_policy: "{{ fwebos_virtual_server }}_policy"
         fwebos_vip_name: "{{ fwebos_virtual_server_name }}_vip"   
-        fwebos_certificate: "/tmp/{{ fwebos_virtual_server_name }}_{{ sys_id }}.p12"
+        fwebos_certificate: "{{ fwebos_virtual_server_name }}_{{ sys_id }}"
