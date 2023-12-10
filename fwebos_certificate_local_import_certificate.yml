@@ -5,10 +5,14 @@
   collections:
     - fortinet.fortiweb
   vars:
-    certificate: "/tmp/cert.p12"
     sys_id: '1bc7749b47627590d2bbe228436d4378'
 
   tasks:
+
+  - name: Set certificate fact
+    ansible.builtin.set_fact:
+      certificate: "/tmp/{{ fwebos_virtual_server }}.p12"
+
   - name: Download file and force basic auth
     ansible.builtin.get_url:
       url: "{{ SN_HOST }}/api/now/attachment/{{ sys_id }}/file"
