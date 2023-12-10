@@ -11,7 +11,7 @@
 
   - name: Set certificate fact
     ansible.builtin.set_fact:
-      certificate: "/tmp/{{ fwebos_virtual_server }}.p12"
+      certificate: "/tmp/{{ fwebos_virtual_server_name }}.p12"
 
   - name: Download file and force basic auth
     ansible.builtin.get_url:
@@ -27,8 +27,9 @@
     # to get the certificate from ServiceNow, and that
     # the p12 certificate was placed in /tmp/cert.p12
     fwebos_certificate_local_import_certificate:
-     action: add
-     vdom: root
-     type: PKCS12Certificate
-     certificateWithKeyFile: "{{ certificate }}"
-     password: PASSW0RD
+      action: add
+      vdom: root
+      type: PKCS12Certificate
+      certificateWithKeyFile: "{{ certificate }}"
+      password: PASSW0RD
+    no_log: true
