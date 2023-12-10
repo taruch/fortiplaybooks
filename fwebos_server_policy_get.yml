@@ -1,0 +1,13 @@
+---
+- name: Create Virtual Server Policy
+  hosts: fortiweb
+  gather_facts: false
+  collections:
+  - fortinet.fortiweb
+  vars:
+  tasks:
+    - name: Create server policy
+      fwebos_server_policy:
+       action: get
+       vdom: root
+       name: "{{ fwebos_server_policy  }}"

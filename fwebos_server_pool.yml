@@ -10,7 +10,7 @@
     ansible_httpapi_validate_certs: no
     ansible_httpapi_port: 8443
   tasks:
-  - name: Create server pool 
+  - name: Create Server Pool 
     fwebos_server_pool:
       action: add 
       vdom: root
@@ -19,12 +19,31 @@
       server_balance: disable
       #server_balance: enable
       lb_algo: round-robin
-      comment: test111
       # health: HLTHCK_ICMP
       # persistence: test
       # reuse_conn_total_time: 100
       # reuse_conn_max_request: 100
       # reuse_conn_max_count: 100
+    ignore_errors: true
+    register: server_pool_result
+
+  - name: Debug Create Server Pool 
+    ansible.builtin.debug:
+      msg: "{{ server_pool_result }}"
+      verbosity: 3
+
+  - name: fail the play if the previous command did not succeed
+    ansible.builtin.fail:
+      msg: "{{ server_pool_result.res.results.message }}"
+    when:
+      - server_pool_result.failed == true
+      - server_pool_result.res.results.message != 'A duplicate entry has already existed.'
+
+  # - name: Get server pool information
+  #   fwebos_server_pool:
+  #     action: add 
+  #     vdom: root
+  #     name: "{{ fwebos_server_pool }}"
 
   # - name: edit server pool
   #   fwebos_server_pool:
