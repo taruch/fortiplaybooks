@@ -5,9 +5,19 @@
   collections:
   - fortinet.fortiweb
   vars:
+
   tasks:
-    - name: Create server policy
-      fwebos_server_policy:
-       action: get
-       vdom: root
-       name: "{{ fwebos_server_policy  }}"
+  - name: Create server policy
+    fwebos_server_policy:
+      action: get
+      vdom: root
+      name: "{{ fwebos_server_policy | default(omit) }}"
+    ignore_errors: true
+    register: server_policy_result
+
+  - name: Debug Create Server Pool 
+    ansible.builtin.debug:
+      msg: "{{ server_policy_result }}"
+      verbosity: 3
+
+...
