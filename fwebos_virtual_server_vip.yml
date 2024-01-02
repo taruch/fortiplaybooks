@@ -4,24 +4,16 @@
   gather_facts: false
   collections:
     - fortinet.fortiweb
-  vars:
-    #ansible_network_os: fortinet.fortiweb.fwebos
-    #ansible_httpapi_use_ssl: yes
-    #ansible_httpapi_validate_certs: no
-    #ansible_httpapi_port: 8443
+  # variables defined in fwebos_server_variables.yml
 
   tasks:
-
   - name: Create Virtual Server VIP
     fwebos_virtual_server_vip:
       action: add
       table_name: "{{ fwebos_virtual_server_name }}"
-      #table_name: "{{ item.table_name }}"
       vip: "{{ fwebos_vip_name }}"
-      #vip: "{{ item.vip }}"
       status: enable
       vdom: root
-    #loop: "{{ fwebos_virtual_server_vip }}"
     ignore_errors: true
     register: virtual_server_vip_result
 
@@ -36,14 +28,3 @@
     when:
       - virtual_server_vip_result.failed == true
       - virtual_server_vip_result.res.results.message != 'A duplicate entry has already existed.'
-
-
-#   - name: edit
-#     fwebos_virtual_server_vip:
-#       action: edit
-#       table_name: entrenchedrealist
-#       vip: entrenchedrealist_vip
-#       status: enable
-#       name: 1
-#       vdom: root
-
