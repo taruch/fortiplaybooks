@@ -4,9 +4,6 @@
   gather_facts: false
   collections:
     - fortinet.fortiweb
-  vars:
-    #sys_id: '1bc7749b47627590d2bbe228436d4378'
-
   tasks:
 
   - name: Set certificate fact
