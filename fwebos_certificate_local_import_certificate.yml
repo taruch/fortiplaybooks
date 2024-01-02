@@ -12,6 +12,7 @@
 
   - name: Download file and force basic auth
     ansible.builtin.get_url:
+      # SN_HOST, SN_USERNAME, SN_PASSWORD defined in credential
       url: "{{ SN_HOST }}/api/now/attachment/{{ sys_id }}/file"
       dest: "{{ certificate }}"
       force_basic_auth: yes
