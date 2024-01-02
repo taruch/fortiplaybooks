@@ -4,11 +4,8 @@
   gather_facts: false
   collections:
   - fortinet.fortiweb
-  vars:
-    ansible_network_os: fortinet.fortiweb.fwebos
-    ansible_httpapi_use_ssl: yes
-    ansible_httpapi_validate_certs: no
-    ansible_httpapi_port: 8443
+  # variables defined in fwebos_server_variables.yml
+
   tasks:
   - name: Create Server Pool 
     fwebos_server_pool:
@@ -38,31 +35,3 @@
     when:
       - server_pool_result.failed == true
       - server_pool_result.res.results.message != 'A duplicate entry has already existed.'
-
-  # - name: Get server pool information
-  #   fwebos_server_pool:
-  #     action: add 
-  #     vdom: root
-  #     name: "{{ fwebos_server_pool }}"
-
-  # - name: edit server pool
-  #   fwebos_server_pool:
-  #    action: edit 
-  #    vdom: root
-  #    name: test
-  #    type: reverse-proxy
-  #    server_balance: enable
-  #    lb_algo: round-robin
-  #    comment: test111
-  #    health: HLTHCK_ICMP
-  #    persistence: test
-  #    reuse_conn_total_time: 100
-  #    reuse_conn_idle_time: 20
-  #    reuse_conn_max_request: 100
-  #    reuse_conn_max_count: 100
-  #
-  # - name: delete server pool 
-  #   fwebos_server_pool:
-  #     action: delete 
-  #     vdom: root
-  #     name: test 
