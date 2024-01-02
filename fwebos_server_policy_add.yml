@@ -5,6 +5,8 @@
   collections:
   - fortinet.fortiweb
   vars:
+  # variables defined in fwebos_server_variables.yml
+
   tasks:
   - name: Create server policy
     fwebos_server_policy:
