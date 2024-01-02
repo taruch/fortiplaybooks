@@ -13,7 +13,6 @@
       action: add
       vdom: root
       retry_on_connect_failure: disable
-      #protocol: HTTP
       client_certificate_forwarding: disable
       client_real_ip: disable
       urlcert_hlen: 32
@@ -21,7 +20,6 @@
       tls13_custom_cipher: TLS_AES_256_GCM_SHA384
       urlcert: disable
       syncookie: disable
-      #service: HTTPS
       hsts_preload: disable
       sni_strict: disable
       client_certificate_forwarding_cert_header: X-Client-Cert
@@ -29,7 +27,6 @@
       ssl_cipher: medium
       traffic_mirror_type: client-side
       multi_certificate: disable
-      #multi_certificate: enable
       hsts_header: disable
       monitor_mode: disable
       deployment_mode: server-pool
@@ -66,9 +63,6 @@
       certificate: "{{ fwebos_certificate }}"
       http2_custom_cipher: ECDHE-ECDSA-AES256-GCM-SHA384 DHE-DSS-AES128-GCM-SHA256 DHE-RSA-AES128-GCM-SHA256 ECDHE-RSA-AES256-GCM-SHA384
       web_protection_profile: Inline Standard Protection
-      #certificate_group: test
-      #allow_hosts: test.com
-      #intermediate_certificate_group: test
       tlog: disable
       chunk_encoding: enable
     ignore_errors: true
