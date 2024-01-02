@@ -4,8 +4,8 @@
   gather_facts: false
   collections:
     - fortinet.fortiweb
-  tasks:
 
+  tasks:
   - name: Set certificate fact
     ansible.builtin.set_fact:
       certificate: "/tmp/{{ fwebos_certificate }}.p12"
