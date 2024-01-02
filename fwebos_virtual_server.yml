@@ -4,7 +4,8 @@
   gather_facts: false
   collections:
     - fortinet.fortiweb
-
+  # Variables defined in fwebos_server_variables.yml
+  
   tasks:
   - name: Create a Virtual Server
     fwebos_virtual_server:
