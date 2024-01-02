@@ -10,10 +10,8 @@
     fwebos_virtual_server:
       action: add
       name: "{{  fwebos_virtual_server_name }}"
-      #name: "{{ item.name }}"
       vdom: root
     ignore_errors: true
-    #loop: "{{ fwebos_virtual_servers }}"
     register: create_vs_result
 
   - name: Debug output of Create a Virtual Server
