@@ -1,5 +1,5 @@
 ---
-- name: Update FortiGate Firewall Rules
+- name: Update FortiGate Firewall Rule
   hosts: "{{ target_fortigate }}"
   gather_facts: False
 
